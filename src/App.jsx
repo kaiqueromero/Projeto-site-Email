@@ -1,35 +1,32 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import Header from "./components/Header";
+import Sidebar from "./components/Sidebar";
+import { Container } from "./components/Container.jsx";
+import Bottombar from "./components/Bottombar";
+import EmailList from "./components/EmailList";
+import EmailContent from "./components/EmailContent";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [openEmail, setOpenEmail] = useState(null);
 
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header />
+      <Container>
+        <div className="flex flex-col md:flex-row gap-2 xl:gap-4 h-full relative">
+          <Sidebar />
+          <EmailList setOpenEmail={setOpenEmail} />
+          {openEmail && (
+            <EmailContent
+              email={openEmail}
+              onClose={() => setOpenEmail(null)}
+            />
+          )}
+          <Bottombar />
+        </div>
+      </Container>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
